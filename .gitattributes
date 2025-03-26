@@ -1,3 +1,4 @@
 resources/videoSource.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 models/yolo11x.pt filter=lfs diff=lfs merge=lfs -text
+/resources/videoResource.mp4 filter=lfs diff=lfs merge=lfs -text
