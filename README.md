@@ -35,10 +35,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # 2. Install dependencies
 pip install -r requirements.txt
 
-####
-####  Press Q to quit Parking_management.py
-####  Press Ctrl + C to quit Flask Api (app.py)
-
 # 3.0 <Optional> Set trained model's size / complexity to desired level / hardware limitations
 Modifying model = model="models/yolo11x.pt" line replace x in yolo11x.pt
     available options in asceding order of their complexity: n < s < m < l < x
@@ -47,6 +43,8 @@ Modifying model = model="models/yolo11x.pt" line replace x in yolo11x.pt
 # 3.1 Run parking mangement file
 Python parking_management.py
 
+####  Press Q to quit Parking_management.py
+####  Press Ctrl + C to quit Flask Api (app.py)
 
 # 4. Run Api
 python app.py
