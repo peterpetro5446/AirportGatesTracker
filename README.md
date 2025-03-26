@@ -34,5 +34,14 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Run Api
+####
+#### Note Press Q to quit Parking_management.py
+####      Press Ctrl + C to quit Flask Api (app.py)
+
+# 3. Run parking mangement file
+Python parking_management.py
+
+# 4. Run Api
 python app.py
+
+#5 Open index.html in a web browser
