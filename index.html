@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MCO Track</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"> <!-- Change font -->
+  <link rel="icon" href="resources/favicon.png" type="image/png">  <!-- Airplane icon for browser tab -->
+  <style>
+    body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('resources/background.png') no-repeat center center fixed;    /* background picture */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    backdrop-filter: blur(7px);   /* Blur so it does not overwhelm UI */
+    }
+  
+    .subhead {    /* gates text */
+    font-size: 1.2rem;
+    color: #444;
+    font-weight: 500;
+    }
+
+    h1 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #333;
+    line-height: 1.5;
+    }
+    .card {   /* white card background */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    }
+      /* OCCUPANCY PROGRESS BAR */
+    .progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    margin-top: 8px;
+    overflow: hidden;
+    }
+    .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #0077cc;
+    transition: width 0.5s ease-in-out;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .stat {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: #555;
+    }
+    .highlight {
+      font-weight: 600;
+      color: #0077cc;
+    }
+    .timestamp {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    .error {
+      color: red;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+    <div class="card">
+        <h1>
+          Orlando International Airport<br>
+          <span class="subhead">Gates [1–29]</span>
+        </h1>
+    
+        <p class="stat">Occupied: <span id="occupied" class="highlight">Loading...</span></p>
+        <p class="stat">Available: <span id="available" class="highlight">Loading...</span></p>
+        <p class="stat">Occupancy: <span id="occupancy-percent" class="highlight">Loading...</span></p>
+        <div class="progress-container">
+            <div class="progress-bar" id="occupancy-bar"></div>
+          </div>
+        <p class="timestamp">Last updated: <span id="timestamp">Loading...</span></p>
+        <p class="error" id="error"></p>
+      </div>
+
+  <script>
+    function fetchParkingStatus() {
+        fetch("http://127.0.0.1:5000/api/parking-status")
+            .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch");
+            return response.json();
+            })
+            .then(data => {
+            const occupied = data.occupied;
+            const available = data.available;
+            const total = data.total_spots || (occupied + available); // fallback if not sent
+
+            const percent = total > 0 ? ((occupied / total) * 100).toFixed(1) : 0;
+
+            document.getElementById("occupied").innerText = occupied;
+            document.getElementById("available").innerText = available;
+            const occupancyElem = document.getElementById("occupancy-percent");
+            occupancyElem.innerText = percent + "%";
+
+            // Color based on threshold https://htmlcolorcodes.com/color-picker/
+            if (percent < 50) {
+              occupancyElem.style.color = "green"; // low occupancy
+            } else if (percent < 80) {
+              occupancyElem.style.color = "#ff8700"; //orange - medium occupancy
+            } else {
+              occupancyElem.style.color = "red"; // high occupancy
+            }
+            document.getElementById("occupancy-bar").style.width = percent + "%";
+            document.getElementById("timestamp").innerText = data.timestamp;
+            document.getElementById("error").innerText = "";
+            })
+            .catch(error => {
+            document.getElementById("error").innerText = "Error fetching data";
+            });
+        }
+    fetchParkingStatus();
+    setInterval(fetchParkingStatus, 3000); // Update every 3 seconds
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+/resources/videoSource.mp4
+models/On branch main
+models/
+models/yolo11x.pt"venv/" 
+"__pycache__/" 
+"*.pyc" 
+"models/*.pt" 
