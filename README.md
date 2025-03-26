@@ -1,13 +1,14 @@
 # ParkingTrack
 
-A smart parking lot monitoring system that detects planes, tracks their positions, and manages parking gates using computer vision and bounding box data.
+A smart parking lot monitoring system that detects planes, tracks their positions, and manages parking gates using computer vision and bounding box data. With the usage of Flask API occupancy data is extracted into a HTML.
 
 ## Project Features
 
+- Video footage recorded from Microsoft Flight Simulator 2024
 - Vehicle detection and tracking
 - JSON-based bounding box input
 - Web-based frontend interface
-- Parking space management logic
+- Parking space management logic applied to Orlando International Airport - Terminal A - Gates 1 - 29
 
 ## Project Structure
 
@@ -35,8 +36,8 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 ####
-#### Note Press Q to quit Parking_management.py
-####      Press Ctrl + C to quit Flask Api (app.py)
+####  Press Q to quit Parking_management.py
+####  Press Ctrl + C to quit Flask Api (app.py)
 
 # 3. Run parking mangement file
 Python parking_management.py
